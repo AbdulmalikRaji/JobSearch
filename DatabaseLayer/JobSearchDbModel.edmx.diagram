@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="46273729ca58442199d8f86ab89ed68d" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="jobsearchDBModel.AccountStatusTable" Width="1.5" PointX="1.5" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="jobsearchDBModel.CertificateTable" Width="1.5" PointX="8.25" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="jobsearchDBModel.CompanyTable" Width="1.5" PointX="6.75" PointY="19.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="jobsearchDBModel.CountryTable" Width="1.5" PointX="0.75" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="jobsearchDBModel.CurrentJobStatusTable" Width="1.5" PointX="3.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="jobsearchDBModel.EducationTable" Width="1.5" PointX="3" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="jobsearchDBModel.EmployeeTable" Width="1.5" PointX="6" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="jobsearchDBModel.EventTable" Width="1.5" PointX="9" PointY="26.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="jobsearchDBModel.JobApplyStatusTable" Width="1.5" PointX="9" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="jobsearchDBModel.JobApplyTable" Width="1.5" PointX="11.25" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="jobsearchDBModel.JobCategoryTable" Width="1.5" PointX="3.75" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="jobsearchDBModel.JobStatusTable" Width="1.5" PointX="6.75" PointY="23.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="jobsearchDBModel.JobTable" Width="1.5" PointX="6" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="jobsearchDBModel.LanguageTable" Width="1.5" PointX="8.25" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="jobsearchDBModel.PostJobTable" Width="1.5" PointX="9" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="jobsearchDBModel.SkillTable" Width="1.5" PointX="8.25" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="jobsearchDBModel.UserTable" Width="1.5" PointX="3.75" PointY="17.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="jobsearchDBModel.UserTypeTable" Width="1.5" PointX="1.5" PointY="19.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="jobsearchDBModel.WorkExperienceTable" Width="1.5" PointX="3" PointY="22" IsExpanded="true" />
+        <AssociationConnector Association="jobsearchDBModel.FK_UserTable_AccountStatusTable" ManuallyRouted="false" />
+        <AssociationConnector Association="jobsearchDBModel.FK_CertificateTable_EmployeeTable" ManuallyRouted="false" />
+        <AssociationConnector Association="jobsearchDBModel.FK_CompanyTable_UserTable" ManuallyRouted="false" />
+        <AssociationConnector Association="jobsearchDBModel.FK_EventTable_CompanyTable" ManuallyRouted="false" />
+        <AssociationConnector Association="jobsearchDBModel.FK_PostJobTable_CompanyTable" ManuallyRouted="false" />
+        <AssociationConnector Association="jobsearchDBModel.FK_EducationTable_CountryTable" ManuallyRouted="false" />
+        <AssociationConnector Association="jobsearchDBModel.FK_EmployeeTable_CountryTable" ManuallyRouted="false" />
+        <AssociationConnector Association="jobsearchDBModel.FK_WorkExperienceTable_CountryTable" ManuallyRouted="false" />
+        <AssociationConnector Association="jobsearchDBModel.FK_EmployeeTable_CurrentJobStatusTable" ManuallyRouted="false" />
+        <AssociationConnector Association="jobsearchDBModel.FK_EducationTable_EmployeeTable" ManuallyRouted="false" />
+        <AssociationConnector Association="jobsearchDBModel.FK_EmployeeTable_JobCategoryTable" ManuallyRouted="false" />
+        <AssociationConnector Association="jobsearchDBModel.FK_EmployeeTable_UserTable" ManuallyRouted="false" />
+        <AssociationConnector Association="jobsearchDBModel.FK_JobApplyTable_EmployeeTable" ManuallyRouted="false" />
+        <AssociationConnector Association="jobsearchDBModel.FK_LanguageTable_EmployeeTable" ManuallyRouted="false" />
+        <AssociationConnector Association="jobsearchDBModel.FK_SkillTable_EmployeeTable" ManuallyRouted="false" />
+        <AssociationConnector Association="jobsearchDBModel.FK_JobApplyTable_JobApplyStatusTable" ManuallyRouted="false" />
+        <AssociationConnector Association="jobsearchDBModel.FK_JobApplyTable_PostJobTable" ManuallyRouted="false" />
+        <AssociationConnector Association="jobsearchDBModel.FK_JobTable_JobCategoryTable" ManuallyRouted="false" />
+        <AssociationConnector Association="jobsearchDBModel.FK_PostJobTable_JobCategoryTable" ManuallyRouted="false" />
+        <AssociationConnector Association="jobsearchDBModel.FK_PostJobTable_JobStatusTable" ManuallyRouted="false" />
+        <AssociationConnector Association="jobsearchDBModel.FK_PostJobTable_UserTable" ManuallyRouted="false" />
+        <AssociationConnector Association="jobsearchDBModel.FK_UserTypeTable_UserTable" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
