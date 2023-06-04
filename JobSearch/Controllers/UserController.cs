@@ -14,14 +14,12 @@ namespace JobSearch.Controllers
         // GET: User
         public ActionResult NewUser()
         {
-            ViewBag.UserTypeID = new SelectList(db.UserTypeTables.Where(u => u.UserTypeID != 1).ToList(), "UserTypeID", "UserType", "0");
             return View(new UserMV());
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult NewUser(UserMV userMV)
         {
-            ViewBag.UserTypeID = new SelectList(db.UserTypeTables.Where(u => u.UserTypeID != 1).ToList(), "UserTypeID", "UserType", userMV.UserTypeID);
             return View(new UserMV());
         }
     }

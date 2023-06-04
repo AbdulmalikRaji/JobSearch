@@ -17,6 +17,7 @@ namespace JobSearch.Models
         public string Password { get; set; }
         public string EmailAddress { get; set; }
         public string ContactNo { get; set; }
+        public bool IsProvider { get; set; }
         public CompanyMV Company { get; set; }
     }
 }
