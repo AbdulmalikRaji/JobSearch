@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -12,10 +13,15 @@ namespace JobSearch.Models
             Company = new CompanyMV();
         }
         public int UserID { get; set; }
+        [Required(ErrorMessage = "Required*")]
         public int UserTypeID { get; set; }
+        [Required(ErrorMessage = "Required*")]
         public string Username { get; set; }
+        [Required(ErrorMessage = "Required*")]
         public string Password { get; set; }
+        [Required(ErrorMessage = "Required*")]
         public string EmailAddress { get; set; }
+        [Required(ErrorMessage = "Required*")]
         public string ContactNo { get; set; }
         public bool IsProvider { get; set; }
         public CompanyMV Company { get; set; }
