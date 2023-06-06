@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Job board HTML-5 Template </title>
+    <title>UP Job </title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" href="~/Content/assets/img/favicon.ico">
@@ -24,6 +24,15 @@
 </head>
 
 <body>
+    @{
+        int usertypeid = 0;
+        if (!string.IsNullOrEmpty(Convert.ToString(Session["UserTypeID"])))
+        {
+            int.TryParse(Convert.ToString(Session["UserTypeID"]), out usertypeid);
+        }
+
+
+}
     <!-- Preloader Start -->
     <div id="preloader-active">
         <div class="preloader d-flex align-items-center justify-content-center">
@@ -72,8 +81,19 @@
                                 </div>
                                 <!-- Header-btn -->
                                 <div class="header-btn d-none f-right d-lg-block">
-                                    <a href="#" class="btn head-btn1">Register</a>
-                                    <a href="#" class="btn head-btn2">Login</a>
+                                    @if (usertypeid < 1)
+                                    {
+                                        <a href="@Url.Content("~/User/NewUser")" class="btn head-btn1">Register</a>
+                                        <a href="@Url.Content("~/User/Login")" class="btn head-btn2">Login</a>
+
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Content("~/User/Logout")" class="btn head-btn1">Log Out</a>
+
+                                    }
+
+
                                 </div>
                             </div>
                         </div>
@@ -114,7 +134,7 @@
                                 <h4>Contact Info</h4>
                                 <ul>
                                     <li><a href="#">Address : North Cyprus</a></li>
-                                    <li><a href="#">Phone : +8880 44338899</a></li>
+                                    <li><a href="#">Phone : +5399999999</a></li>
                                     <li><a href="#">Email : info@upjob.com</a></li>
                                 </ul>
                             </div>
@@ -145,7 +165,7 @@
                                 <!-- Form -->
                                 <div class="footer-form">
                                     <div id="mc_embed_signup">
-                                        <form target="_blank" action="#"
+                                        <form target="_blank" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
                                               method="get" class="subscribe_form relative mail_part">
                                             <input type="email" name="email" id="newsletter-form-email" placeholder="Email Address"
                                                    class="placeholder hide-on-focus" onfocus="this.placeholder = ''"
@@ -174,7 +194,7 @@
                     </div>
                     <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
                         <div class="footer-tittle-bottom">
-                            <span>5000+</span>
+                            <span>10000+</span>
                             <p>Talented Hunter</p>
                         </div>
                     </div>
@@ -204,7 +224,7 @@
                                 <p>
                                     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                                     Copyright &copy;
-                                    <script>document.write(new Date().getFullYear());</script> All rights reserved
+                                    <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is created by EMU Students
                                     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                                 </p>
                             </div>
@@ -223,6 +243,7 @@
         </div>
         <!-- Footer End-->
     </footer>
+
 
     <!-- JS here -->
     <!-- All JS Custom Plugins Link Here here -->

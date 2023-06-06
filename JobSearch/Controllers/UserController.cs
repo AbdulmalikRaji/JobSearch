@@ -109,5 +109,42 @@ namespace JobSearch.Controllers
             }
                 return View(userMV);
         }
+        public ActionResult Login() 
+        {
+            return View(new UserLoginMV());
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(UserLoginMV userLoginMV)
+        {
+            if(ModelState.IsValid)
+            {
+                var user = db.UserTables.Where(u => u.Username == userLoginMV.Username && u.Password == userLoginMV.Password).FirstOrDefault();
+                if (user == null)
+                {
+                    ModelState.AddModelError(String.Empty, "Enter correct Username/Password");
+                    return View(userLoginMV);
+                }
+                Session["UserID"] = user.UserID;
+                Session["Username"] = user.Username;
+                Session["UserTypeID"] = user.UserTypeID;
+                if(user.UserTypeID == 2)
+                {
+                    Session["CompanyID"] = user.CompanyTables.FirstOrDefault().CompanyID;
+                }
+
+                return RedirectToAction("Index", "Home");
+            }
+            return View(userLoginMV);
+        }
+        public ActionResult Logout()
+        {
+            Session["UserID"] = string.Empty;
+            Session["Username"] = string.Empty;
+            Session["CompanyID"] = string.Empty;
+            Session["UserTypeID"] = string.Empty;
+
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
