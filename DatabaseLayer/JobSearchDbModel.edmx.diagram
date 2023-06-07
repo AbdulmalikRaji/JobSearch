@@ -8,8 +8,6 @@
         <EntityTypeShape EntityType="jobsearchDBModel.CompanyTable" Width="1.5" PointX="3.75" PointY="8.875" IsExpanded="true" />
         <EntityTypeShape EntityType="jobsearchDBModel.JobCategoryTable" Width="1.5" PointX="3.75" PointY="12.625" IsExpanded="true" />
         <EntityTypeShape EntityType="jobsearchDBModel.JobNatureTable" Width="1.5" PointX="3.75" PointY="15.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="jobsearchDBModel.JobRequirementDetailTable" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="jobsearchDBModel.JobRequirementsTable" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="jobsearchDBModel.JobStatusTable" Width="1.5" PointX="3.75" PointY="17.5" IsExpanded="true" />
         <EntityTypeShape EntityType="jobsearchDBModel.PostJobTable" Width="1.5" PointX="6" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="jobsearchDBModel.UserTable" Width="1.5" PointX="1.5" PointY="9" IsExpanded="true" />
@@ -18,11 +16,13 @@
         <AssociationConnector Association="jobsearchDBModel.FK_PostJobTable_CompanyTable" ManuallyRouted="false" />
         <AssociationConnector Association="jobsearchDBModel.FK_PostJobTable_JobCategoryTable" ManuallyRouted="false" />
         <AssociationConnector Association="jobsearchDBModel.FK_PostJobTable_JobNatureTable" ManuallyRouted="false" />
-        <AssociationConnector Association="jobsearchDBModel.FK_JobRequirementDetailTable_JobRequirementsTable" ManuallyRouted="false" />
-        <AssociationConnector Association="jobsearchDBModel.FK_PostJobTable_JobRequirementsTable" ManuallyRouted="false" />
         <AssociationConnector Association="jobsearchDBModel.FK_PostJobTable_JobStatusTable" ManuallyRouted="false" />
         <AssociationConnector Association="jobsearchDBModel.FK_PostJobTable_UserTable" ManuallyRouted="false" />
         <AssociationConnector Association="jobsearchDBModel.FK_UserTypeTable_UserTable" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="jobsearchDBModel.JobRequirementDetailTable" Width="1.5" PointX="8.25" PointY="5.5" />
+        <EntityTypeShape EntityType="jobsearchDBModel.JobRequirementsTable" Width="1.5" PointX="6" PointY="0.75" />
+        <AssociationConnector Association="jobsearchDBModel.FK_JobRequirementDetailTable_JobRequirementsTable" />
+        <AssociationConnector Association="jobsearchDBModel.FK_JobRequirementDetailTable_PostJobTable" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
