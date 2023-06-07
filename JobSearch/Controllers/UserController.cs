@@ -154,7 +154,7 @@ namespace JobSearch.Controllers
                 return RedirectToAction("Login", "User");
 
             }
-            var users = Db.UserTables.ToList();
+            var users = db.UserTables.ToList();
             return View(users);
 
         }
