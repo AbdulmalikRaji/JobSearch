@@ -17,12 +17,22 @@ namespace JobSearch.Controllers
         // GET: JobCategoryTables
         public ActionResult Index()
         {
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserTypeID"])))
+            {
+                return RedirectToAction("Login", "User");
+
+            }
             return View(db.JobCategoryTables.ToList());
         }
 
         // GET: JobCategoryTables/Create
         public ActionResult Create()
         {
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserTypeID"])))
+            {
+                return RedirectToAction("Login", "User");
+
+            }
             return View(new JobCategoryTable());
         }
 
@@ -33,6 +43,11 @@ namespace JobSearch.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(JobCategoryTable jobCategoryTable)
         {
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserTypeID"])))
+            {
+                return RedirectToAction("Login", "User");
+
+            }
             if (ModelState.IsValid)
             {
                 db.JobCategoryTables.Add(jobCategoryTable);
@@ -46,6 +61,11 @@ namespace JobSearch.Controllers
         // GET: JobCategoryTables/Edit/5
         public ActionResult Edit(int? id)
         {
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserTypeID"])))
+            {
+                return RedirectToAction("Login", "User");
+
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -65,6 +85,11 @@ namespace JobSearch.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(JobCategoryTable jobCategoryTable)
         {
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserTypeID"])))
+            {
+                return RedirectToAction("Login", "User");
+
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(jobCategoryTable).State = EntityState.Modified;

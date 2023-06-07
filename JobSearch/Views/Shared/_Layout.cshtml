@@ -63,18 +63,21 @@
                                 <div class="main-menu">
                                     <nav class="d-none d-lg-block">
                                         <ul id="navigation">
-                                            <li><a href="index.html">Home</a></li>
+                                            <li><a href="@Url.Content("~/Home/Index")">Home</a></li>
                                             <li><a href="job_listing.html">Find a Jobs </a></li>
                                             <li><a href="about.html">About</a></li>
-                                            <li>
-                                                <a href="#">Page</a>
+                                            @if(usertypeid == 1){
+                                              <li>
+                                                <a href="#">Configure</a>
                                                 <ul class="submenu">
-                                                    <li><a href="blog.html">Blog</a></li>
-                                                    <li><a href="single-blog.html">Blog Details</a></li>
-                                                    <li><a href="elements.html">Elements</a></li>
-                                                    <li><a href="job_details.html">job Details</a></li>
+                                                    <li><a href="@Url.Content("~/JobCategoryTables/Index")">Job Categories</a></li>
+                                                    <li><a href="@Url.Content("~/JobNatureTables/Index")">Job Nature></li>
                                                 </ul>
-                                            </li>
+                                              </li>
+                                              <li>
+                                                  <a href = "@Url.Content("~/User/AllUsers")">All Users</a>
+                                              </li>
+                                             }
                                             <li><a href="contact.html">Contact</a></li>
                                         </ul>
                                     </nav>
