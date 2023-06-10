@@ -33,6 +33,6 @@ namespace JobSearch.Models
         public int JobStatusID { get; set; }
         [Required(ErrorMessage = "Required")]
         [DataType(DataType.Url)]
-        public string webUrl { get; set; }
+        public string WebUrl { get; set; }
     }
 }

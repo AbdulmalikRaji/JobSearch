@@ -132,7 +132,7 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     Enter Redirect Job Url
-                    @Html.EditorFor(model => model.webUrl, new
+                    @Html.EditorFor(model => model.WebUrl, new
                {
                    htmlAttributes = new
                    {
@@ -145,7 +145,7 @@
                        @onblur = "this.placeholder = 'Enter Redirect URL'",
                    }
                })
-                    @Html.ValidationMessageFor(model => model.webUrl,
+                    @Html.ValidationMessageFor(model => model.WebUrl,
                    "",
                    new { @class = "text-danger" })
 

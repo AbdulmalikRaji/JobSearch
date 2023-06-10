@@ -205,6 +205,7 @@
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\User\AllUsers.cshtml" />
     <Content Include="Views\Job\PostJob.cshtml" />
+    <Content Include="Views\Job\CompanyJobsList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
