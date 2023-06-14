@@ -162,6 +162,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CompanyMV.cs" />
+    <Compile Include="Models\JobRequirementsMV.cs" />
     <Compile Include="Models\PostJobMV.cs" />
     <Compile Include="Models\UserLoginMV.cs" />
     <Compile Include="Models\UserMV.cs" />
@@ -206,6 +207,7 @@
     <Content Include="Views\User\AllUsers.cshtml" />
     <Content Include="Views\Job\PostJob.cshtml" />
     <Content Include="Views\Job\CompanyJobsList.cshtml" />
+    <Content Include="Views\Job\AddRequirements.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

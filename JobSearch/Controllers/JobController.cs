@@ -91,9 +91,51 @@ namespace JobSearch.Controllers
             int companyid = 0;
             int.TryParse(Convert.ToString(Session["UserID"]), out userid);
             int.TryParse(Convert.ToString(Session["CompanyID"]), out companyid);
-            var allposts = db.PostJobTables.ToList();
+            var allposts = db.PostJobTables.Where(c=>c.CompanyID == companyid && c.UserID == userid).ToList();
 
             return View(allposts);
+        }
+
+        public ActionResult AddRequirements(int? id) 
+        {
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserTypeID"])))
+            {
+                return RedirectToAction("Login", "User");
+            }
+            var details = db.JobRequirementDetailTables.Where(j=>j.PostJobID == id).ToList();
+            if(details.Count() > 0)
+            {
+                details = details.OrderBy(r => r.JobRequirementID).ToList();   
+            }
+            var requirements = new JobRequirementsMV();
+            requirements.Details = details;
+            requirements.PostJobID = (int)id;
+            ViewBag.JobRequirementID = new SelectList(db.JobRequirementsTables.ToList(), "JobRequirementID", "JobRequirementTitle", "0");
+            return View(requirements);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddRequirements(JobRequirementsMV jobRequirementsMV)
+        {
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserTypeID"])))
+            {
+                return RedirectToAction("Login", "User");
+            }
+            var requirements = new JobRequirementDetailTable();
+            requirements.JobRequirementID = jobRequirementsMV.JobRequirementID;
+            requirements.JobRequirementDetails = jobRequirementsMV.JobRequirementDetails;
+            requirements.PostJobID = jobRequirementsMV.PostJobID;
+            db.JobRequirementDetailTables.Add(requirements);
+            db.SaveChanges();
+
+            var details = db.JobRequirementDetailTables.Where(j => j.PostJobID == requirements.PostJobID).ToList();
+            if (details.Count() > 0)
+            {
+                details = details.OrderBy(r => r.JobRequirementID).ToList();
+            }
+            jobRequirementsMV.Details = details;
+            ViewBag.JobRequirementID = new SelectList(db.JobRequirementsTables.ToList(), "JobRequirementID", "JobRequirementTitle", jobRequirementsMV.JobRequirementID);
+            return View(jobRequirementsMV);
         }
     }
 }
