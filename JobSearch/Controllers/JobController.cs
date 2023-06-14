@@ -121,21 +121,49 @@ namespace JobSearch.Controllers
             {
                 return RedirectToAction("Login", "User");
             }
-            var requirements = new JobRequirementDetailTable();
-            requirements.JobRequirementID = jobRequirementsMV.JobRequirementID;
-            requirements.JobRequirementDetails = jobRequirementsMV.JobRequirementDetails;
-            requirements.PostJobID = jobRequirementsMV.PostJobID;
-            db.JobRequirementDetailTables.Add(requirements);
-            db.SaveChanges();
-
-            var details = db.JobRequirementDetailTables.Where(j => j.PostJobID == requirements.PostJobID).ToList();
-            if (details.Count() > 0)
+            try
             {
-                details = details.OrderBy(r => r.JobRequirementID).ToList();
+                var requirements = new JobRequirementDetailTable();
+                requirements.JobRequirementID = jobRequirementsMV.JobRequirementID;
+                requirements.JobRequirementDetails = jobRequirementsMV.JobRequirementDetails;
+                requirements.PostJobID = jobRequirementsMV.PostJobID;
+                db.JobRequirementDetailTables.Add(requirements);
+                db.SaveChanges();
+                return RedirectToAction("AddRequirements", new { id = requirements.PostJobID });
             }
-            jobRequirementsMV.Details = details;
+            catch (Exception)
+            {
+                var details = db.JobRequirementDetailTables.Where(j => j.PostJobID == jobRequirementsMV.PostJobID).ToList();
+                if (details.Count() > 0)
+                {
+                    details = details.OrderBy(r => r.JobRequirementID).ToList();
+                }
+                jobRequirementsMV.Details = details;
+                ModelState.AddModelError("JobRequirementID", "Required");
+            }
+
             ViewBag.JobRequirementID = new SelectList(db.JobRequirementsTables.ToList(), "JobRequirementID", "JobRequirementTitle", jobRequirementsMV.JobRequirementID);
             return View(jobRequirementsMV);
+        }
+
+        public ActionResult DeleteRequirements(int? id)
+        {
+            var jobpostid = db.JobRequirementDetailTables.Find(id).PostJobID;
+            var requirements = db.JobRequirementDetailTables.Find(id);
+            db.Entry(requirements).State = System.Data.Entity.EntityState.Deleted;
+            db.SaveChanges();
+            return RedirectToAction("AddRequirements", new { id = jobpostid });
+        }
+        public ActionResult DeleteJobPost(int? id)
+        {
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserTypeID"])))
+            {
+                return RedirectToAction("Login", "User");
+            }
+            var jobpost = db.PostJobTables.Find(id);
+            db.Entry(jobpost).State = System.Data.Entity.EntityState.Deleted;
+            db.SaveChanges();
+            return RedirectToAction("CompanyJobsList");
         }
     }
 }
