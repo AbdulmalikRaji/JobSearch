@@ -8,18 +8,21 @@ using System.Web;
 namespace JobSearch.Models
 {
     public class JobRequirementsMV
-        
+
     {
         public JobRequirementsMV()
         {
             Details = new List<JobRequirementDetailTable>();
         }
-        [Required(ErrorMessage ="Required")]
+
+        [Required(ErrorMessage = "Required")]
         public int JobRequirementID { get; set; }
         [Required(ErrorMessage = "Required")]
         public string JobRequirementDetails { get; set; }
-        public int PostJobID { get; set; } 
-
-        public List<JobRequirementDetailTable> Details { get; set; }
+        public int PostJobID { get; set; }
+        public List<JobRequirementDetailTable> Details
+        {
+            get; set;
+        }
     }
 }

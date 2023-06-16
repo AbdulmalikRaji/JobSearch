@@ -165,5 +165,59 @@ namespace JobSearch.Controllers
             db.SaveChanges();
             return RedirectToAction("CompanyJobsList");
         }
+        public ActionResult JobDetails(int? id)
+        {
+            var getpostjob = db.PostJobTables.Find(id);
+            var postjob = new PostJobDetailsMV();
+            postjob.PostJobID = getpostjob.PostJobID;
+            postjob.Company = getpostjob.CompanyTable.CompanyName;
+            postjob.JobCategory = getpostjob.JobCategoryTable.JobCategory;
+            postjob.JobTitle = getpostjob.JobTitle;
+            postjob.JobDescription = getpostjob.JobDescription;
+            postjob.MinSalary = getpostjob.MinSalary;
+            postjob.MaxSalary = getpostjob.MaxSalary;
+            postjob.Location = getpostjob.Location;
+            postjob.Vacancy = getpostjob.Vacancy;
+            postjob.JobNature = getpostjob.JobNatureTable.JobNature;
+            postjob.PostDate = getpostjob.PostDate;
+            postjob.ApplicationLastDate = getpostjob.ApplicationLastDate;
+            postjob.WebUrl = getpostjob.WebUrl;
+
+            getpostjob.JobRequirementDetailTables = getpostjob.JobRequirementDetailTables.OrderBy(d => d.JobRequirementID).ToList();
+            int jobrequirementid = 0;
+            var jobrequirements = new JobRequirementMV();
+            var jobrequirementsdetails = new JobRequirementDetailMV();
+            foreach (var detail in getpostjob.JobRequirementDetailTables)
+            {
+                if(jobrequirementid == 0)
+                {
+                    jobrequirements.JobRequirementID = detail.JobRequirementID;
+                    jobrequirements.JobRequirementTitle = detail.JobRequirementsTable.JobRequirementTitle;
+                    jobrequirementsdetails.JobRequirementID = detail.JobRequirementID;
+                    jobrequirementsdetails.JobRequirementDetails = detail.JobRequirementDetails;
+                    jobrequirements.Details.Add(jobrequirementsdetails);
+                    jobrequirementid = detail.JobRequirementID;
+                } else if (jobrequirementid == detail.JobRequirementID) 
+                {
+                    jobrequirementsdetails.JobRequirementID = detail.JobRequirementID;
+                    jobrequirementsdetails.JobRequirementDetails = detail.JobRequirementDetails;
+                    jobrequirements.Details.Add(jobrequirementsdetails);
+                    jobrequirementid = detail.JobRequirementID;
+                }
+                else if(jobrequirementid != detail.JobRequirementID)
+                {
+                    postjob.Requirements.Add(jobrequirements);
+                    jobrequirements = new JobRequirementMV();
+                    jobrequirements.JobRequirementID = detail.JobRequirementID;
+                    jobrequirements.JobRequirementTitle = detail.JobRequirementsTable.JobRequirementTitle;
+                    jobrequirementsdetails.JobRequirementID = detail.JobRequirementID;
+                    jobrequirementsdetails.JobRequirementDetails = detail.JobRequirementDetails;
+                    jobrequirements.Details.Add(jobrequirementsdetails);
+                    jobrequirementid = detail.JobRequirementID;
+                }
+            }
+            postjob.Requirements.Add(jobrequirements);
+            return View(postjob);
+        }
     }
 }
