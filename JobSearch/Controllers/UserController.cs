@@ -119,14 +119,14 @@ namespace JobSearch.Controllers
         {
             if(ModelState.IsValid)
             {
-                var user = db.UserTables.Where(u => u.Username == userLoginMV.Username && u.Password == userLoginMV.Password).FirstOrDefault();
+                var user = db.UserTables.Where(u => u.EmailAddress == userLoginMV.Email && u.Password == userLoginMV.Password).FirstOrDefault();
                 if (user == null)
                 {
                     ModelState.AddModelError(String.Empty, "Enter correct Username/Password");
                     return View(userLoginMV);
                 }
                 Session["UserID"] = user.UserID;
-                Session["Username"] = user.Username;
+                Session["Email"] = user.EmailAddress;
                 Session["UserTypeID"] = user.UserTypeID;
                 if(user.UserTypeID == 2)
                 {
@@ -140,7 +140,7 @@ namespace JobSearch.Controllers
         public ActionResult Logout()
         {
             Session["UserID"] = string.Empty;
-            Session["Username"] = string.Empty;
+            Session["Email"] = string.Empty;
             Session["CompanyID"] = string.Empty;
             Session["UserTypeID"] = string.Empty;
 

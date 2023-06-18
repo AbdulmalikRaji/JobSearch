@@ -9,7 +9,7 @@ namespace JobSearch.Models
     public class UserLoginMV
     {
         [Required(ErrorMessage = "Required")]
-        public String Username { get; set; }
+        public String Email { get; set; }
         [Required(ErrorMessage = "Required")]
         public String Password { get; set; }
     }

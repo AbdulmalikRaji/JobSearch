@@ -233,9 +233,9 @@ namespace JobSearch.Controllers
             getpostjob.JobRequirementDetailTables = getpostjob.JobRequirementDetailTables.OrderBy(d => d.JobRequirementID).ToList();
             int jobrequirementid = 0;
             var jobrequirements = new JobRequirementMV();
-            var jobrequirementsdetails = new JobRequirementDetailMV();
             foreach (var detail in getpostjob.JobRequirementDetailTables)
             {
+            var jobrequirementsdetails = new JobRequirementDetailMV();
                 if(jobrequirementid == 0)
                 {
                     jobrequirements.JobRequirementID = detail.JobRequirementID;

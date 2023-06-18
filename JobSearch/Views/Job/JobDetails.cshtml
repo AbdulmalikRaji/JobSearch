@@ -61,7 +61,7 @@
                         <ul>
                             @foreach (var detail in item.Details)
                             {
-                                <li>@detail.JobRequirementDetails</li>
+                                <li>@Html.DisplayFor(modelItem => detail.JobRequirementDetails)</li>
                             }
                         </ul>
                     </div>
@@ -87,7 +87,14 @@
                         <li>Application date : <span>@Model.ApplicationLastDate.ToString("d MMM, yyyy")</span></li>
                     </ul>
                     <div class="apply-btn2">
-                        <a href="@Url.Content(Model.WebUrl)" class="btn">Apply Now</a>
+                        <a href="#" onclick="redirectToUrl('@Model.WebUrl')" class="btn">Apply Now</a>
+
+                        <script>
+                            function redirectToUrl(url) {
+                                window.location.href = "http://" + url;
+                            }
+                        </script>
+
                     </div>
                 </div>
                 
