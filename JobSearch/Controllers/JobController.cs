@@ -95,6 +95,24 @@ namespace JobSearch.Controllers
 
             return View(allposts);
         }
+        public ActionResult AllCompanyPendingJobs()
+        {
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserTypeID"])))
+            {
+                return RedirectToAction("Login", "User");
+            }
+            int userid = 0;
+            int companyid = 0;
+            int.TryParse(Convert.ToString(Session["UserID"]), out userid);
+            int.TryParse(Convert.ToString(Session["CompanyID"]), out companyid);
+            var allposts = db.PostJobTables.ToList();
+            if (allposts.Count() > 1)
+            {
+                allposts = allposts.OrderByDescending(c => c.PostJobID).ToList();
+            }
+
+            return View(allposts);
+        }
 
         public ActionResult AddRequirements(int? id) 
         {
@@ -163,7 +181,36 @@ namespace JobSearch.Controllers
             var jobpost = db.PostJobTables.Find(id);
             db.Entry(jobpost).State = System.Data.Entity.EntityState.Deleted;
             db.SaveChanges();
+            if (Convert.ToString(Session["UserTypeID"]) == "1")
+            {
+                return RedirectToAction("AllCompanyPendingJobs");
+
+            }
             return RedirectToAction("CompanyJobsList");
+        }
+        public ActionResult ApprovedPost(int? id)
+        {
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserTypeID"])))
+            {
+                return RedirectToAction("Login", "User");
+            }
+            var jobpost = db.PostJobTables.Find(id);
+            jobpost.JobStatusID = 2;
+            db.Entry(jobpost).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("AllCompanyPendingJobs");
+        }
+        public ActionResult CancelledPost(int? id)
+        {
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserTypeID"])))
+            {
+                return RedirectToAction("Login", "User");
+            }
+            var jobpost = db.PostJobTables.Find(id);
+            jobpost.JobStatusID = 3;
+            db.Entry(jobpost).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("AllCompanyPendingJobs");
         }
         public ActionResult JobDetails(int? id)
         {
@@ -218,6 +265,44 @@ namespace JobSearch.Controllers
             }
             postjob.Requirements.Add(jobrequirements);
             return View(postjob);
+        }
+        public ActionResult FilterJob()
+        {
+            var obj = new FilterJobMV();
+            var date = DateTime.Now.Date;
+            var result = db.PostJobTables.Where(r => r.ApplicationLastDate >= date && r.JobStatusID == 2).ToList();
+            obj.Result = result;
+            ViewBag.JobCategoryID = new SelectList(
+               db.JobCategoryTables.ToList(),
+               "JobCategoryID",
+               "JobCategory",
+               "O");
+            ViewBag.JobNatureID = new SelectList(
+                db.JobNatureTables.ToList(),
+                "JobNatureID",
+                "JobNature",
+                "O");
+            return View(obj);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult FilterJob(FilterJobMV filterJobMV)
+        {
+            var date = DateTime.Now.Date;
+            var result = db.PostJobTables.Where(r => r.ApplicationLastDate >= date && r.JobStatusID == 2 && (r.JobCategoryID == filterJobMV.JobCategoryID || r.JobNatureID == filterJobMV.JobNatureID)).ToList();
+            filterJobMV.Result = result;
+
+            ViewBag.JobCategoryID = new SelectList(
+               db.JobCategoryTables.ToList(),
+               "JobCategoryID",
+               "JobCategory",
+               filterJobMV.JobCategoryID);
+            ViewBag.JobNatureID = new SelectList(
+                db.JobNatureTables.ToList(),
+                "JobNatureID",
+                "JobNature",
+                filterJobMV.JobNatureID);
+            return View(filterJobMV);
         }
     }
 }

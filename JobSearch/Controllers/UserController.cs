@@ -158,5 +158,25 @@ namespace JobSearch.Controllers
             return View(users);
 
         }
+        public ActionResult Forgot()
+        {
+            return View(new ForgotPasswordMv());
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Forgot(ForgotPasswordMv forgotPasswordMv)
+        {
+            var user = db.UserTables.Where(u => u.EmailAddress == forgotPasswordMv.Email).FirstOrDefault();
+            if (user != null) 
+            {
+                ModelState.AddModelError(string.Empty, "Password Has been reset successfully");
+            }
+            else
+            {
+                ModelState.AddModelError("Email", "Email Address is Incorrect");
+            }
+            
+            return View();
+        }
     }
 }

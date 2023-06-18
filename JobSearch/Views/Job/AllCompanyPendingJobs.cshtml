@@ -1,0 +1,93 @@
+﻿@model IEnumerable<DatabaseLayer.PostJobTable>
+
+@{
+    ViewBag.Title = "All Peninding Jobs";
+}
+
+<h2>All Pending Job Posts</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.JobTitle)
+        </th>
+        <th>
+            Min-Max Salary
+        </th>
+        <th>
+            Location
+        </th>
+        <th>
+            Vacancy
+        </th>
+        <th>
+            Post Date
+        </th>
+        <th>
+            Last Date
+        </th>
+
+        <th>
+            Redirect URl
+        </th>
+        <th>
+            Category
+        </th>
+        <th>
+            Nature
+        </th>
+        <th>
+            Status
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobTitle)
+            </td>
+            <td>
+                @item.MinSalary - @item.MaxSalary
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vacancy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PostDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplicationLastDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WebUrl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobCategoryTable.JobCategory)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobNatureTable.JobNature)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobStatusTable.JobStatus)
+            </td>
+
+            <td>
+                @if (item.JobStatusID != 2)
+                {
+                    @Html.ActionLink("Approve", "ApprovedPost", new { id = item.PostJobID }, new { @class = "genric-btn info circle text-sm" })
+                }
+                else if (item.JobStatusID != 3)
+                {
+                    @Html.ActionLink("Cancel", "CancelledPost", new { id = item.PostJobID }, new { @class = "genric-btn danger circle" })
+                }
+                @Html.ActionLink("View", "JobDetails", new { id = item.PostJobID }, new { @class = "genric-btn primary circle" })
+                @Html.ActionLink("Delete", "DeleteJobPost", new { id = item.PostJobID }, new { @class = "genric-btn danger circle" })
+            </td>
+        </tr>
+    }
+
+</table>

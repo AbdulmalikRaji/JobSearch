@@ -64,9 +64,13 @@
                                     <nav class="d-none d-lg-block">
                                         <ul id="navigation">
                                             <li><a href="@Url.Content("~/Home/Index")">Home</a></li>
-                                            <li><a href="job_listing.html">Find a Job </a></li>
+                                            @if (usertypeid != 1 && usertypeid != 2)
+                                            {
+                                                <li><a href="@Url.Content("~/Job/FilterJob")">Find a Job </a></li>
+                                            }
                                             @if (usertypeid == 1)
                                             {
+                                                <li><a href="@Url.Content("~/Job/FilterJob")">All Listings</a></li>
                                                 <li>
                                                     <a href="#">Configure</a>
                                                     <ul class="submenu">
@@ -85,6 +89,12 @@
                                                 </li>
                                                 <li>
                                                     <a href="@Url.Content("~/Job/CompanyJobsList")">All Posts</a>
+                                                </li>
+                                            }
+                                            @if (usertypeid == 1)
+                                            {
+                                                <li>
+                                                    <a href="@Url.Content("~/Job/AllCompanyPendingJobs")">All Job Posts</a>
                                                 </li>
                                             }
                                             <li><a href="contact.html">Contact</a></li>
@@ -153,48 +163,7 @@
 
                         </div>
                     </div>
-                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
-                        <div class="single-footer-caption mb-50">
-                            <div class="footer-tittle">
-                                <h4>Important Link</h4>
-                                <ul>
-                                    <li><a href="#"> View Project</a></li>
-                                    <li><a href="#">Contact Us</a></li>
-                                    <li><a href="#">Testimonial</a></li>
-                                    <li><a href="#">Proparties</a></li>
-                                    <li><a href="#">Support</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
-                        <div class="single-footer-caption mb-50">
-                            <div class="footer-tittle">
-                                <h4>Newsletter</h4>
-                                <div class="footer-pera footer-pera2">
-                                    <p>Stay informed and never miss out on exciting job opportunities with our comprehensive UpJob newsletter.</p>
-                                </div>
-                                <!-- Form -->
-                                <div class="footer-form">
-                                    <div id="mc_embed_signup">
-                                        <form target="_blank" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-                                              method="get" class="subscribe_form relative mail_part">
-                                            <input type="email" name="email" id="newsletter-form-email" placeholder="Email Address"
-                                                   class="placeholder hide-on-focus" onfocus="this.placeholder = ''"
-                                                   onblur="this.placeholder = ' Email Address '">
-                                            <div class="form-icon">
-                                                <button type="submit" name="submit" id="newsletter-submit"
-                                                        class="email_icon newsletter-submit button-contactForm">
-                                                    <img src="~/Content/assets/img/icon/form.png" alt="">
-                                                </button>
-                                            </div>
-                                            <div class="mt-10 info"></div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
                 <!--  -->
                 <div class="row footer-wejed justify-content-between">
@@ -246,7 +215,6 @@
                                 <a href="#"><i class="fab fa-facebook-f"></i></a>
                                 <a href="#"><i class="fab fa-twitter"></i></a>
                                 <a href="#"><i class="fas fa-globe"></i></a>
-                                <a href="#"><i class="fab fa-behance"></i></a>
                             </div>
                         </div>
                     </div>
