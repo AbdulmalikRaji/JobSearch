@@ -81,6 +81,7 @@
             @Html.ActionLink("+Requirement", "AddRequirements", new { id = item.PostJobID }, new { @class = "genric-btn info circle text-sm" })
             @Html.ActionLink("Cancel", "DeleteJobPost", new { id = item.PostJobID }, new { @class = "genric-btn danger circle" })
             @Html.ActionLink("View", "JobDetails", new { id = item.PostJobID }, new { @class = "genric-btn primary circle" })
+            @Html.ActionLink("Applications", "ApplicationDetails", new { jobId = item.PostJobID }, new { @class = "genric-btn success circle" })
         </td>
     </tr>
 }

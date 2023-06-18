@@ -34,5 +34,6 @@ namespace DatabaseLayer
         public virtual DbSet<JobRequirementDetailTable> JobRequirementDetailTables { get; set; }
         public virtual DbSet<JobRequirementsTable> JobRequirementsTables { get; set; }
         public virtual DbSet<PostJobTable> PostJobTables { get; set; }
+        public virtual DbSet<JobSeekerTable> JobSeekerTables { get; set; }
     }
 }

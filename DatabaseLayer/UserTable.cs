@@ -19,6 +19,7 @@ namespace DatabaseLayer
         {
             this.CompanyTables = new HashSet<CompanyTable>();
             this.PostJobTables = new HashSet<PostJobTable>();
+            this.JobSeekerTables = new HashSet<JobSeekerTable>();
         }
     
         public int UserID { get; set; }
@@ -33,5 +34,7 @@ namespace DatabaseLayer
         public virtual UserTypeTable UserTypeTable { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PostJobTable> PostJobTables { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<JobSeekerTable> JobSeekerTables { get; set; }
     }
 }

@@ -80,6 +80,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>JobSearchDBModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="JobSeekerTable.cs">
+      <DependentUpon>JobSearchDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="JobStatusTable.cs">
       <DependentUpon>JobSearchDBModel.tt</DependentUpon>
     </Compile>

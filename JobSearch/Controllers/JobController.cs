@@ -229,6 +229,7 @@ namespace JobSearch.Controllers
             postjob.PostDate = getpostjob.PostDate;
             postjob.ApplicationLastDate = getpostjob.ApplicationLastDate;
             postjob.WebUrl = getpostjob.WebUrl;
+            postjob.ContactNo = getpostjob.CompanyTable.ContactNo;
 
             getpostjob.JobRequirementDetailTables = getpostjob.JobRequirementDetailTables.OrderBy(d => d.JobRequirementID).ToList();
             int jobrequirementid = 0;
@@ -304,5 +305,87 @@ namespace JobSearch.Controllers
                 filterJobMV.JobNatureID);
             return View(filterJobMV);
         }
+        [HttpGet]
+        public ActionResult Apply(int jobId)
+        {
+            // Retrieve the logged-in user's ID
+            int userId = Convert.ToInt32(Session["UserID"]);
+
+            // Check if the user has already applied for the job
+            bool alreadyApplied = db.JobSeekerTables.Any(j => j.PostJobID == jobId && j.UserID == userId);
+            if (alreadyApplied)
+            {
+                TempData["ErrorMessage"] = "You have already applied for this job.";
+                return RedirectToAction("FilterJob", "Job");
+            }
+
+            // Create a new instance of the JobApplicationMV model and set the PostJobID
+            var model = new JobApplicationMV
+            {
+                PostJobID = jobId
+            };
+
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Apply(JobApplicationMV model)
+        {
+            // Check if the model is valid
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Retrieve the logged-in user's ID
+                    int userId = Convert.ToInt32(Session["UserID"]);
+
+                    // Check if the user has already applied for the job
+                    bool alreadyApplied = db.JobSeekerTables.Any(j => j.PostJobID == model.PostJobID && j.UserID == userId);
+                    if (alreadyApplied)
+                    {
+                        TempData["ErrorMessage"] = "You have already applied for this job.";
+                        return RedirectToAction("FilterJob", "Job");
+                    }
+
+                    // Create a new job seeker entry for the applied job
+                    var jobSeeker = new JobSeekerTable();
+                    jobSeeker.PostJobID = model.PostJobID;
+                    jobSeeker.UserID = userId;
+                    jobSeeker.FirstName = model.FirstName;
+                    jobSeeker.LastName = model.LastName;
+                    jobSeeker.ApplicationDate = DateTime.Now;
+                    jobSeeker.EmailAddress = model.Email;
+                    jobSeeker.ExperienceID = model.Experience;
+                    jobSeeker.Skills = model.Skills;
+                    jobSeeker.ContactNo = model.ContactNo;
+                    jobSeeker.Education = model.Education;
+
+                    db.JobSeekerTables.Add(jobSeeker);
+                    db.SaveChanges();
+
+                    TempData["SuccessMessage"] = "Job Application successful.";
+
+                    return RedirectToAction("JobDetails", "Job", new { id = model.PostJobID });
+
+                }
+                catch (Exception)
+                {
+
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            return View(model);
+        }
+        public ActionResult ApplicationDetails(int jobId)
+        {
+            // Retrieve the list of applications for the given job ID
+            var applications = db.JobSeekerTables.Where(j => j.PostJobID == jobId).ToList();
+
+            // You can pass the list of applications to the view for display
+            return View(applications);
+        }
+
+
+
     }
 }

@@ -21,6 +21,7 @@ namespace JobSearch.Models
         public string Location { get; set; }
         public int Vacancy { get; set; }
         public string JobNature { get; set; }
+        public string ContactNo { get; set; }
         public System.DateTime PostDate { get; set; }
         public System.DateTime ApplicationLastDate { get; set; }
         public string WebUrl { get; set; }

@@ -23,6 +23,9 @@
         <AssociationConnector Association="jobsearchDBModel.FK_JobRequirementDetailTable_PostJobTable" />
         <AssociationConnector Association="jobsearchDBModel.FK_PostJobTable_JobStatusTable" />
         <AssociationConnector Association="jobsearchDBModel.FK_PostJobTable_UserTable" />
+        <EntityTypeShape EntityType="jobsearchDBModel.JobSeekerTable" Width="1.5" PointX="8.25" PointY="12.875" />
+        <AssociationConnector Association="jobsearchDBModel.FK_JobSeekerTable_PostJobTable" />
+        <AssociationConnector Association="jobsearchDBModel.FK_JobSeekerTable_UserTable" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
