@@ -2,9 +2,11 @@
 using JobSearch.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+
 
 namespace JobSearch.Controllers
 {
@@ -290,7 +292,7 @@ namespace JobSearch.Controllers
         public ActionResult FilterJob(FilterJobMV filterJobMV)
         {
             var date = DateTime.Now.Date;
-            var result = db.PostJobTables.Where(r => r.ApplicationLastDate >= date && r.JobStatusID == 2 && (r.JobCategoryID == filterJobMV.JobCategoryID || r.JobNatureID == filterJobMV.JobNatureID)).ToList();
+            var result = db.PostJobTables.Where(r => r.ApplicationLastDate >= date && r.JobStatusID == 2 && r.Vacancy>0 && (r.JobCategoryID == filterJobMV.JobCategoryID || r.JobNatureID == filterJobMV.JobNatureID)).ToList();
             filterJobMV.Result = result;
 
             ViewBag.JobCategoryID = new SelectList(
@@ -313,10 +315,10 @@ namespace JobSearch.Controllers
 
             // Check if the user has already applied for the job
             bool alreadyApplied = db.JobSeekerTables.Any(j => j.PostJobID == jobId && j.UserID == userId);
-            if (alreadyApplied)
+            if (alreadyApplied) 
             {
                 TempData["ErrorMessage"] = "You have already applied for this job.";
-                return RedirectToAction("FilterJob", "Job");
+                return RedirectToAction("JobDetails", "Job", new { id = jobId });
             }
 
             // Create a new instance of the JobApplicationMV model and set the PostJobID
@@ -344,13 +346,14 @@ namespace JobSearch.Controllers
                     if (alreadyApplied)
                     {
                         TempData["ErrorMessage"] = "You have already applied for this job.";
-                        return RedirectToAction("FilterJob", "Job");
+                        return RedirectToAction("JobDetails", "Job", new { id = model.PostJobID });
                     }
 
                     // Create a new job seeker entry for the applied job
                     var jobSeeker = new JobSeekerTable();
                     jobSeeker.PostJobID = model.PostJobID;
                     jobSeeker.UserID = userId;
+                    jobSeeker.JobApplyStatus = "PENDING";
                     jobSeeker.FirstName = model.FirstName;
                     jobSeeker.LastName = model.LastName;
                     jobSeeker.ApplicationDate = DateTime.Now;
@@ -359,7 +362,22 @@ namespace JobSearch.Controllers
                     jobSeeker.Skills = model.Skills;
                     jobSeeker.ContactNo = model.ContactNo;
                     jobSeeker.Education = model.Education;
+                    if (model.CVFile != null && model.CVFile.ContentLength > 0)
+                    {
+                        // Get the file name and extension
+                        string fileName = Path.GetFileName(model.CVFile.FileName);
+                        string extension = Path.GetExtension(model.CVFile.FileName);
 
+                        // Generate a unique file name
+                        string uniqueFileName = Guid.NewGuid().ToString("N") + extension;
+
+                        // Save the file to the server
+                        string filePath = Path.Combine(Server.MapPath("~/CVs"), uniqueFileName);
+                        model.CVFile.SaveAs(filePath);
+
+                        // Store the CV file path in the job seeker entry
+                        jobSeeker.CVFilePath = uniqueFileName;
+                    }
                     db.JobSeekerTables.Add(jobSeeker);
                     db.SaveChanges();
 
@@ -378,13 +396,49 @@ namespace JobSearch.Controllers
         }
         public ActionResult ApplicationDetails(int jobId)
         {
-            // Retrieve the list of applications for the given job ID
+
             var applications = db.JobSeekerTables.Where(j => j.PostJobID == jobId).ToList();
 
-            // You can pass the list of applications to the view for display
             return View(applications);
         }
+        public ActionResult UpdateJobApplyStatus(int id, string status)
+        {
+            var jobSeeker = db.JobSeekerTables.Find(id);
+            if (jobSeeker == null)
+            {
+                return HttpNotFound();
+            }
 
+            jobSeeker.JobApplyStatus = status;
+            db.SaveChanges();
+            var job = db.PostJobTables.Find(jobSeeker.PostJobID);
+            if (job != null && job.Vacancy > 0)
+            {
+                job.Vacancy--;
+                db.SaveChanges();
+            }
+
+            // Get the PostJobID to redirect back to the ApplicationDetails view for that job
+            int jobId = jobSeeker.PostJobID;
+
+            return RedirectToAction("ApplicationDetails", new { jobId = jobId });
+        }
+        public ActionResult CancelJobApply(int id)
+        {
+            var jobSeeker = db.JobSeekerTables.Find(id);
+            if (jobSeeker == null)
+            {
+                return HttpNotFound();
+            }
+
+            jobSeeker.JobApplyStatus = "PENDING";
+            db.SaveChanges();
+
+            // Get the PostJobID to redirect back to the ApplicationDetails view for that job
+            int jobId = jobSeeker.PostJobID;
+
+            return RedirectToAction("ApplicationDetails", new { jobId = jobId });
+        }
 
 
     }

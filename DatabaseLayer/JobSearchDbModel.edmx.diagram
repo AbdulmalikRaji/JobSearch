@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3858015a9bb448c3859bf9ecad3e8730" Name="Diagram1">
+      <Diagram DiagramId="3858015a9bb448c3859bf9ecad3e8730" Name="Diagram1" ZoomLevel="55">
         <EntityTypeShape EntityType="jobsearchDBModel.CompanyTable" Width="1.5" PointX="3.75" PointY="8.875" IsExpanded="true" />
         <EntityTypeShape EntityType="jobsearchDBModel.JobCategoryTable" Width="1.5" PointX="3.75" PointY="12.625" IsExpanded="true" />
         <EntityTypeShape EntityType="jobsearchDBModel.JobNatureTable" Width="1.5" PointX="3.75" PointY="15.125" IsExpanded="true" />

@@ -55,6 +55,7 @@
           </Key>
           <Property Name="JobSeekerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PostJobID" Type="int" Nullable="false" />
+          <Property Name="JobApplyStatus" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="LastName" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="EmailAddress" Type="nvarchar" MaxLength="150" Nullable="false" />
@@ -64,6 +65,7 @@
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="ApplicationDate" Type="date" Nullable="false" />
           <Property Name="Education" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="CVFilePath" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="JobStatusTable">
           <Key>
@@ -598,6 +600,8 @@
           <NavigationProperty Name="UserTable" Relationship="jobsearchDBModel.FK_JobSeekerTable_UserTable" FromRole="JobSeekerTable" ToRole="UserTable" />
           <Property Name="ApplicationDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Education" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CVFilePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="JobApplyStatus" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_JobSeekerTable_PostJobTable">
           <End Type="jobsearchDBModel.PostJobTable" Role="PostJobTable" Multiplicity="1" />
@@ -732,6 +736,8 @@
           <EntitySetMapping Name="JobSeekerTables">
             <EntityTypeMapping TypeName="jobsearchDBModel.JobSeekerTable">
               <MappingFragment StoreEntitySet="JobSeekerTable">
+                <ScalarProperty Name="JobApplyStatus" ColumnName="JobApplyStatus" />
+                <ScalarProperty Name="CVFilePath" ColumnName="CVFilePath" />
                 <ScalarProperty Name="Education" ColumnName="Education" />
                 <ScalarProperty Name="ApplicationDate" ColumnName="ApplicationDate" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />

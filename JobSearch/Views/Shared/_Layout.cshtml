@@ -32,7 +32,7 @@
         }
 
 
-}
+    }
     <!-- Preloader Start -->
     <div id="preloader-active">
         <div class="preloader d-flex align-items-center justify-content-center">
@@ -67,6 +67,12 @@
                                             @if (usertypeid != 1 && usertypeid != 2)
                                             {
                                                 <li><a href="@Url.Content("~/Job/FilterJob")">Find a Job </a></li>
+
+                                            }
+
+                                            @if (usertypeid == 3)
+                                            {
+                                                <li><a href="@Url.Content("~/User/AppliedJobs")">All Applied Jobs</a></li>
                                             }
                                             @if (usertypeid == 1)
                                             {
@@ -84,6 +90,8 @@
                                             }
                                             @if (usertypeid == 2)
                                             {
+                                                <li><a href="@Url.Content("~/Job/FilterJob")">All Listings</a></li>
+
                                                 <li>
                                                     <a href="@Url.Content("~/Job/PostJob")">Post Job</a>
                                                 </li>
@@ -163,7 +171,7 @@
 
                         </div>
                     </div>
-                    
+
                 </div>
                 <!--  -->
                 <div class="row footer-wejed justify-content-between">

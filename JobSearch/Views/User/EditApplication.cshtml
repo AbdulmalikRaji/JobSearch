@@ -1,0 +1,189 @@
+﻿@model DatabaseLayer.JobSeekerTable
+@{
+    ViewBag.Title = "Edit";
+}
+
+<section class="contact-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="contact-title">Edit Job Application</h2>
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            </div>
+            @using (Html.BeginForm("UpdateApplication", "User", FormMethod.Post, new { @class = "form-contact", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        Enter First name
+                        @Html.EditorFor(model => model.FirstName, new
+                   {
+                       htmlAttributes = new
+                       {
+                           @class = "form-control valid",
+                           @type = "text",
+                           @name = "firstname",
+                           @id = "firstname",
+                           @placeholder = "Enter First name",
+                           @onfocus = "this.placeholder  = ''",
+                           @onblur = "this.placeholder = 'Enter First name'",
+                       }
+                   })
+                        @Html.ValidationMessageFor(model => model.FirstName,
+                       "",
+                       new { @class = "text-danger" })
+
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        Enter Job Last Name
+                        @Html.EditorFor(model => model.LastName, new
+                   {
+                       htmlAttributes = new
+                       {
+                           @class = "form-control valid",
+                           @type = "text",
+                           @name = "lastName",
+                           @id = "lastName",
+                           @placeholder = "Enter Last Name",
+                           @onfocus = "this.placeholder  = ''",
+                           @onblur = "this.placeholder = 'Enter Last Name'",
+                       }
+                   })
+                        @Html.ValidationMessageFor(model => model.LastName,
+                       "",
+                       new { @class = "text-danger" })
+
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        Enter Email Address
+                        @Html.EditorFor(model => model.EmailAddress, new
+                   {
+                       htmlAttributes = new
+                       {
+                           @class = "form-control valid",
+                           @type = "email",
+                           @name = "email",
+                           @id = "email",
+                           @placeholder = "Enter Email Address",
+                           @onfocus = "this.placeholder  = ''",
+                           @onblur = "this.placeholder = 'Enter Email Address'",
+                       }
+                   })
+                        @Html.ValidationMessageFor(model => model.EmailAddress,
+                       "",
+                       new { @class = "text-danger" })
+
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        Enter Contact Number
+                        @Html.EditorFor(model => model.ContactNo, new
+                   {
+                       htmlAttributes = new
+                       {
+                           @class = "form-control valid",
+                           @type = "text",
+                           @name = "contactno",
+                           @id = "contactno",
+                           @placeholder = "Enter Contact No",
+                           @onfocus = "this.placeholder  = ''",
+                           @onblur = "this.placeholder = 'Enter Contact No'",
+                       }
+                   })
+                        @Html.ValidationMessageFor(model => model.ContactNo,
+                       "",
+                       new { @class = "text-danger" })
+
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group">
+                        Enter Work-Related Skills
+                        @Html.EditorFor(model => model.Skills, new
+                   {
+                       htmlAttributes = new
+                       {
+                           @class = "form-control valid",
+                           @type = "text",
+                           @name = "skills",
+                           @id = "skills",
+                           @placeholder = "Enter Skills",
+                           @onfocus = "this.placeholder  = ''",
+                           @onblur = "this.placeholder = 'Enter Skills'",
+                       }
+                   })
+                        @Html.ValidationMessageFor(model => model.Skills,
+                       "",
+                       new { @class = "text-danger" })
+
+                    </div>
+                </div>
+
+                <div class="col-12" id="divcompanydescription">
+                    <div class="form-group">
+                        Enter Experience details
+                        @Html.EditorFor(model => model.ExperienceID, new
+                   {
+                       htmlAttributes = new
+                       {
+                           @class = "form-control valid",
+                           @type = "text",
+                           @name = "experience",
+                           @id = "experience",
+                           @placeholder = "Enter Experience Details",
+                           @onfocus = "this.placeholder  = ''",
+                           @onblur = "this.placeholder = 'Enter Experience Details'",
+                       }
+                   })
+                        @Html.ValidationMessageFor(model => model.ExperienceID,
+                       "",
+                       new { @class = "text-danger" })
+
+                    </div>
+                </div>
+                <div class="col-12" id="divcompanydescription">
+                    <div class="form-group">
+                        Enter Experience details
+                        @Html.EditorFor(model => model.Education, new
+                   {
+                       htmlAttributes = new
+                       {
+                           @class = "form-control valid",
+                           @type = "text",
+                           @name = "education",
+                           @id = "education",
+                           @placeholder = "Enter Education Details",
+                           @onfocus = "this.placeholder  = ''",
+                           @onblur = "this.placeholder = 'Enter Education Details'",
+                       }
+                   })
+                        @Html.ValidationMessageFor(model => model.Education,
+                       "",
+                       new { @class = "text-danger" })
+
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" name="PostJobID" value="@Model.PostJobID" />
+            <input type="hidden" name="JobSeekerID" value="@Model.JobSeekerID" />
+            <input type="hidden" name="CVFilePath" value="@Model.CVFilePath" />
+            <input type="hidden" name="UserID" value="@Model.UserID" />
+            <input type="hidden" name="ApplicationDate" value="@Model.ApplicationDate" />
+            <input type="hidden" name="JobApplyStatus" value="@Model.JobApplyStatus" />
+            <div class="form-group mt-3">
+                <input type="submit" value="Update Application" class="button boxed-btn" />
+            </div>
+        </div>
+            }
+        </div>
+    </div>
+</section>
+

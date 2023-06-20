@@ -1,0 +1,19 @@
+﻿@model List<DatabaseLayer.JobSeekerTable>
+
+<h3> All Appplied Jobs</h3>
+<hr />
+@foreach (var application in Model)
+{
+    <div class="applied-job">
+        <h3><a href="@Url.Action("JobDetails", "Job", new { id = application.PostJobTable.PostJobID })">@application.PostJobTable.JobTitle</a></h3>
+        <h4>@application.PostJobTable.JobCategoryTable.JobCategory</h4>
+        <p>Status: @application.JobApplyStatus</p>
+        <p>Applied Date: @application.ApplicationDate</p>
+        @if (application.JobApplyStatus == "PENDING")
+        {
+            <a href="@Url.Action("EditApplication", new { id = application.JobSeekerID })" class="genric-btn primary circle">Edit Application</a>
+        }
+        <a href="@Url.Action("DeleteApplication", new { id = application.JobSeekerID })" class="genric-btn danger circle">Delete Application</a>
+
+    </div>
+}

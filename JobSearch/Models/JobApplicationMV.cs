@@ -26,7 +26,8 @@ namespace JobSearch.Models
         public string Experience { get; set; }
         [Required(ErrorMessage = "Education details are required.")]
         public string Education { get; set; }
-
+        [Display(Name = "CV")]
+        public HttpPostedFileBase CVFile { get; set; }
 
     }
 }

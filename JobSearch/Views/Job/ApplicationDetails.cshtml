@@ -26,6 +26,9 @@
         <th>
             Education
         </th>
+        <th>
+            Action
+        </th>
     </tr>
 
     @foreach (var item in Model)
@@ -49,6 +52,22 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Education)
+            </td>
+            <td>
+                @if (!string.IsNullOrEmpty(item.CVFilePath))
+                {
+                    <a href="@Url.Content("~/CVs/" + item.CVFilePath)" class="genric-btn primary circle">Download CV</a>
+
+                }
+                @if (item.JobApplyStatus == "PENDING")
+                {
+                    @Html.ActionLink("Accept", "UpdateJobApplyStatus", new { id = item.JobSeekerID, status = "ACCEPTED" }, new { @class = "genric-btn success circle" })
+                    @Html.ActionLink("Reject", "UpdateJobApplyStatus", new { id = item.JobSeekerID, status = "REJECTED" }, new { @class = "genric-btn danger circle" })
+                }
+                else if (item.JobApplyStatus == "ACCEPTED" || item.JobApplyStatus == "REJECTED")
+                {
+                    <a href="@Url.Action("CancelJobApply", new { id = item.JobSeekerID })" class="genric-btn warning circle">Cancel</a>
+                }
             </td>
         </tr>
     }

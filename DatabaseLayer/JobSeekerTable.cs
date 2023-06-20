@@ -25,6 +25,8 @@ namespace DatabaseLayer
         public int UserID { get; set; }
         public System.DateTime ApplicationDate { get; set; }
         public string Education { get; set; }
+        public string CVFilePath { get; set; }
+        public string JobApplyStatus { get; set; }
     
         public virtual PostJobTable PostJobTable { get; set; }
         public virtual UserTable UserTable { get; set; }

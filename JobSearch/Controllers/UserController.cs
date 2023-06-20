@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using BCrypt.Net;
+
 
 
 namespace JobSearch.Controllers
@@ -41,7 +43,9 @@ namespace JobSearch.Controllers
                     {
                         var user = new UserTable();
                         user.Username = userMV.Username;
-                        user.Password = userMV.Password;
+                        string salt = BCrypt.Net.BCrypt.GenerateSalt();
+                        string hashedPassword = BCrypt.Net.BCrypt.HashPassword(userMV.Password, salt);
+                        user.Password = hashedPassword;
                         user.EmailAddress = userMV.EmailAddress;
                         user.UserTypeID = userMV.IsProvider == true ? 2 : 3;
                         user.ContactNo = userMV.ContactNo;
@@ -119,10 +123,10 @@ namespace JobSearch.Controllers
         {
             if(ModelState.IsValid)
             {
-                var user = db.UserTables.Where(u => u.EmailAddress == userLoginMV.Email && u.Password == userLoginMV.Password).FirstOrDefault();
-                if (user == null)
+                var user = db.UserTables.FirstOrDefault(u => u.EmailAddress == userLoginMV.Email);
+                if (user == null || !BCrypt.Net.BCrypt.Verify(userLoginMV.Password, user.Password))
                 {
-                    ModelState.AddModelError(String.Empty, "Enter correct Username/Password");
+                    ModelState.AddModelError(String.Empty, "Enter correct Email/Password");
                     return View(userLoginMV);
                 }
                 Session["UserID"] = user.UserID;
@@ -177,6 +181,73 @@ namespace JobSearch.Controllers
             }
             
             return View();
+        }
+        public ActionResult AppliedJobs()
+        {
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserID"])))
+            {
+                return RedirectToAction("Login", "User");
+            }
+
+            var userId = (int)Session["UserID"];
+            var applications = db.JobSeekerTables.Where(j => j.UserID == userId).ToList();
+            return View(applications);
+        }
+        public ActionResult EditApplication(int id)
+        {
+            var application = db.JobSeekerTables.Find(id);
+            if (application == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Check if the application was submitted within the last 24 hours
+            var currentTime = DateTime.Now;
+            var submissionTime = application.ApplicationDate;
+            var timeDifference = currentTime - submissionTime;
+            var hoursDifference = timeDifference.TotalHours;
+            if (hoursDifference > 24)
+            {
+                ModelState.AddModelError(string.Empty, "Can only Edit application in First day of posting");
+
+            }
+            return View(application);
+        }
+        [HttpPost]
+        public ActionResult UpdateApplication(JobSeekerTable updatedApplication)
+        {
+            var application = db.JobSeekerTables.Find(updatedApplication.JobSeekerID);
+            if (application == null)
+            {
+                return HttpNotFound();
+            }
+            application.FirstName = updatedApplication.FirstName;
+            application.LastName = updatedApplication.LastName;
+            application.ContactNo = updatedApplication.ContactNo;
+            application.EmailAddress = updatedApplication.EmailAddress;
+            application.Skills = updatedApplication.Skills;
+            application.ExperienceID = updatedApplication.ExperienceID;
+            application.Education = updatedApplication.Education;
+            // Update other fields as needed
+
+
+            db.SaveChanges();
+
+            return RedirectToAction("AppliedJobs");
+        }
+        public ActionResult DeleteApplication(int id)
+        {
+            var application = db.JobSeekerTables.Find(id);
+            if (application == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Delete the application from the database
+            db.JobSeekerTables.Remove(application);
+            db.SaveChanges();
+
+            return RedirectToAction("AppliedJobs");
         }
     }
 }
