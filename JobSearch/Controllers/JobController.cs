@@ -433,7 +433,12 @@ namespace JobSearch.Controllers
 
             jobSeeker.JobApplyStatus = "PENDING";
             db.SaveChanges();
-
+            var job = db.PostJobTables.Find(jobSeeker.PostJobID);
+            if (job != null)
+            {
+                job.Vacancy++;
+                db.SaveChanges();
+            }
             // Get the PostJobID to redirect back to the ApplicationDetails view for that job
             int jobId = jobSeeker.PostJobID;
 

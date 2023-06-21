@@ -12,6 +12,9 @@
             @Html.DisplayNameFor(model => model.JobTitle)
         </th>
         <th>
+            Company Name
+        </th>
+        <th>
             Min-Max Salary
         </th>
         <th>
@@ -49,6 +52,9 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.JobTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyTable.CompanyName)  
             </td>
             <td>
                 @item.MinSalary - @item.MaxSalary
