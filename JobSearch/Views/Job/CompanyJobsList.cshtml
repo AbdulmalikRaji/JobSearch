@@ -58,11 +58,17 @@
         <td>
             @Html.DisplayFor(modelItem => item.Vacancy)
         </td>
+        @{
+            var formattedPostDate = item.PostDate.ToString("dd/MM/yyyy");
+        }
+
+        @formattedPostDate
         <td>
-            @Html.DisplayFor(modelItem => item.PostDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ApplicationLastDate)
+            @{
+                var formattedDate = item.ApplicationLastDate.ToString("dd/MM/yyyy");
+            }
+
+            @formattedDate
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.WebUrl)

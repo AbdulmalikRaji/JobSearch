@@ -444,7 +444,13 @@ namespace JobSearch.Controllers
 
             return RedirectToAction("ApplicationDetails", new { jobId = jobId });
         }
+        public ActionResult AcceptedApplications()
+        {
+            // Retrieve all the accepted job applications
+            var acceptedApplications = db.JobSeekerTables.ToList();
 
+            return View(acceptedApplications);
+        }
 
     }
 }

@@ -6,97 +6,122 @@
 
 <h2>All Job Posts</h2>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.JobTitle)
-        </th>
-        <th>
-            Company Name
-        </th>
-        <th>
-            Min-Max Salary
-        </th>
-        <th>
-            Location
-        </th>
-        <th>
-            Vacancy
-        </th>
-        <th>
-            Post Date
-        </th>
-        <th>
-            Last Date
-        </th>
-
-        <th>
-            Redirect URl
-        </th>
-        <th>
-            Category
-        </th>
-        <th>
-            Nature
-        </th>
-        <th>
-            Status
-        </th>
-        <th>
-            Action
-        </th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<div class="table-responsive">
+    <table class="table table-striped table-fit">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.JobTitle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CompanyTable.CompanyName)  
-            </td>
-            <td>
-                @item.MinSalary - @item.MaxSalary
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Location)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Vacancy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PostDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ApplicationLastDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.WebUrl)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.JobCategoryTable.JobCategory)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.JobNatureTable.JobNature)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.JobStatusTable.JobStatus)
-            </td>
-
-            <td>
-                @if (item.JobStatusID != 2)
-                {
-                    @Html.ActionLink("Approve", "ApprovedPost", new { id = item.PostJobID }, new { @class = "genric-btn info circle text-sm" })
-                }
-                else if (item.JobStatusID != 3)
-                {
-                    @Html.ActionLink("Cancel", "CancelledPost", new { id = item.PostJobID }, new { @class = "genric-btn danger circle" })
-                }
-                @Html.ActionLink("View", "JobDetails", new { id = item.PostJobID }, new { @class = "genric-btn primary circle" })
-                @Html.ActionLink("Delete", "DeleteJobPost", new { id = item.PostJobID }, new { @class = "genric-btn danger circle" })
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.JobTitle)
+            </th>
+            <th>
+                Company Name
+            </th>
+            <th>
+                Min-Max Salary
+            </th>
+            <th>
+                Location
+            </th>
+            <th>
+                Vacancy
+            </th>
+            <th>
+                Post Date
+            </th>
+            <th>
+                Last Date
+            </th>
+            <th>
+                Redirect URL
+            </th>
+            <th>
+                Category
+            </th>
+            <th>
+                Nature
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Action
+            </th>
         </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JobTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompanyTable.CompanyName)
+                </td>
+                <td>
+                    @item.MinSalary - @item.MaxSalary
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Location)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vacancy)
+                </td>
+                <td>
+                    @{
+                        var formattedPostDate = item.PostDate.ToString("dd/MM/yyyy");
+                    }
+
+                    @formattedPostDate
+                </td>
+                <td>
+                    @{
+                        var formattedDate = item.ApplicationLastDate.ToString("dd/MM/yyyy");
+                    }
+
+                    @formattedDate
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WebUrl)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JobCategoryTable.JobCategory)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JobNatureTable.JobNature)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JobStatusTable.JobStatus)
+                </td>
+
+                <td>
+                    @if (item.JobStatusID != 2)
+                    {
+                        @Html.ActionLink("Approve", "ApprovedPost", new { id = item.PostJobID }, new { @class = "genric-btn info circle text-sm" })
+                    }
+                    else if (item.JobStatusID != 3)
+                    {
+                        @Html.ActionLink("Cancel", "CancelledPost", new { id = item.PostJobID }, new { @class = "genric-btn danger circle" })
+                    }
+                    @Html.ActionLink("View", "JobDetails", new { id = item.PostJobID }, new { @class = "genric-btn primary circle" })
+                    @Html.ActionLink("Delete", "DeleteJobPost", new { id = item.PostJobID }, new { @class = "genric-btn danger circle" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+<style>
+    /* CSS for the table */
+    .table-fit th,
+    .table-fit td {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
-</table>
+    .table-responsive {
+        margin-left: 0; /* Remove the left margin */
+        padding: 0;
+        overflow-x: auto;
+    }
+</style>

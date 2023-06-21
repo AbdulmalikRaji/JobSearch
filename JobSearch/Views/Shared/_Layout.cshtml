@@ -72,14 +72,26 @@
 
                                             @if (usertypeid == 3)
                                             {
-                                                <li><a href="@Url.Content("~/User/AppliedJobs")">All Applied Jobs</a></li>
+                                                <li><a href="@Url.Content("~/User/AppliedJobs")">Applied Jobs</a></li>
                                             }
                                             @if (usertypeid == 1)
                                             {
-                                                <li><a href="@Url.Content("~/Job/FilterJob")">All Listings</a></li>
                                                 <li>
-                                                    <a href="#">Configure</a>
+                                                    <a>Jobs and Applications</a>
                                                     <ul class="submenu">
+                                                        <li>
+                                                            <a href="@Url.Content("~/Job/AllCompanyPendingJobs")">All Job Posts</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="@Url.Action("AcceptedApplications", "Job")">User Applications</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li><a href="@Url.Content("~/Job/FilterJob")">All Listings</a></li>
+
+                                                <li>
+                                                    <a>Configure Job Info</a>
+                                                    <ul class="submenu" style=" z-index: 9999;">
                                                         <li><a href="@Url.Content("~/JobCategoryTables/Index")">Job Categories</a></li>
                                                         <li><a href="@Url.Content("~/JobNatureTables/Index")">Job Nature</a></li>
                                                     </ul>
@@ -99,13 +111,10 @@
                                                     <a href="@Url.Content("~/Job/CompanyJobsList")">All Posts</a>
                                                 </li>
                                             }
-                                            @if (usertypeid == 1)
+                                            @if (usertypeid != 1)
                                             {
-                                                <li>
-                                                    <a href="@Url.Content("~/Job/AllCompanyPendingJobs")">All Job Posts</a>
-                                                </li>
+                                                <li><a href="@Url.Content("~/Home/Contact")">Contact</a></li>
                                             }
-                                            <li><a href="@Url.Content("~/Home/Contact")">Contact</a></li>
                                         </ul>
                                     </nav>
                                 </div>

@@ -1,4 +1,4 @@
-﻿@model DatabaseLayer.JobSeekerTable
+﻿@model JobSearch.Models.EditApplicationMV
 @{
     ViewBag.Title = "Edit";
 }
@@ -179,8 +179,11 @@
             <input type="hidden" name="ApplicationDate" value="@Model.ApplicationDate" />
             <input type="hidden" name="JobApplyStatus" value="@Model.JobApplyStatus" />
             <div class="form-group mt-3">
-                <input type="submit" value="Update Application" class="button boxed-btn" />
+                <input type="submit" value="Update Application" class="genric-btn primary" />
+                <a href="@Url.Action("AppliedJobs", "User")" class="genric-btn danger">Back</a>
+
             </div>
+
         </div>
             }
         </div>

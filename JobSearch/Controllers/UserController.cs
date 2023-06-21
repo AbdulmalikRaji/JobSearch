@@ -188,6 +188,10 @@ namespace JobSearch.Controllers
             {
                 return RedirectToAction("Login", "User");
             }
+            ViewBag.EditApplicationError = TempData["EditApplicationError"];
+            ViewBag.EditApplicationErrorID = TempData["EditApplicationErrorID"];
+
+
 
             var userId = (int)Session["UserID"];
             var applications = db.JobSeekerTables.Where(j => j.UserID == userId).ToList();
@@ -198,20 +202,37 @@ namespace JobSearch.Controllers
             var application = db.JobSeekerTables.Find(id);
             if (application == null)
             {
-                return HttpNotFound();
+                ModelState.AddModelError(string.Empty, "Application not found");
             }
-
-            // Check if the application was submitted within the last 24 hours
-            var currentTime = DateTime.Now;
-            var submissionTime = application.ApplicationDate;
-            var timeDifference = currentTime - submissionTime;
-            var hoursDifference = timeDifference.TotalHours;
-            if (hoursDifference > 24)
+            else
             {
-                ModelState.AddModelError(string.Empty, "Can only Edit application in First day of posting");
-
+                var currentTime = DateTime.Now;
+                var submissionTime = application.ApplicationDate;
+                var timeDifference = currentTime - submissionTime;
+                var hoursDifference = timeDifference.TotalHours;
+                if (hoursDifference > 24)
+                {
+                    TempData["EditApplicationError"] = "Can only Edit application in the first day of posting";
+                    TempData["EditApplicationErrorID"] = application.PostJobID;
+                    return RedirectToAction("AppliedJobs", "User");
+                }
             }
-            return View(application);
+            var new_application = new EditApplicationMV();
+            new_application.LastName = application.LastName;
+            new_application.ContactNo = application.ContactNo;
+            new_application.EmailAddress = application.EmailAddress;
+            new_application.Skills = application.Skills;
+            new_application.ExperienceID = application.ExperienceID;
+            new_application.Education = application.Education;
+            new_application.ApplicationDate = application.ApplicationDate;
+            new_application.CVFilePath = application.CVFilePath;
+            new_application.FirstName = application.FirstName;
+            new_application.JobSeekerID = application.JobSeekerID;
+            new_application.PostJobID = application.PostJobID;
+            new_application.JobApplyStatus = application.JobApplyStatus;
+            new_application.UserID = application.UserID;
+
+            return View(new_application);
         }
         [HttpPost]
         public ActionResult UpdateApplication(JobSeekerTable updatedApplication)

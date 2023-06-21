@@ -166,6 +166,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CompanyMV.cs" />
+    <Compile Include="Models\EditApplicationMV.cs" />
     <Compile Include="Models\FilterJobMV.cs" />
     <Compile Include="Models\ForgotPasswordMv.cs" />
     <Compile Include="Models\JobApplicationMV.cs" />
@@ -227,6 +228,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\User\AppliedJobs.cshtml" />
     <Content Include="Views\User\EditApplication.cshtml" />
+    <Content Include="Views\Job\AcceptedApplications.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

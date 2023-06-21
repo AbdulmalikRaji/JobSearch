@@ -8,9 +8,18 @@
         <h3><a href="@Url.Action("JobDetails", "Job", new { id = application.PostJobTable.PostJobID })">@application.PostJobTable.JobTitle</a></h3>
         <h4>@application.PostJobTable.JobCategoryTable.JobCategory</h4>
         <p>Status: @application.JobApplyStatus</p>
-        <p>Applied Date: @application.ApplicationDate</p>
+        @{
+            var formattedDate = application.ApplicationDate.ToString("dd/MM/yyyy");
+        }
+
+        <p>Application Date:  @formattedDate</p>
+        @if (!string.IsNullOrEmpty(ViewBag.EditApplicationError) && ViewBag.EditApplicationErrorID == application.PostJobID)
+        {
+            <div class="alert alert-danger">@ViewBag.EditApplicationError</div>
+        }
         @if (application.JobApplyStatus == "PENDING")
         {
+
             <a href="@Url.Action("EditApplication", new { id = application.JobSeekerID })" class="genric-btn primary circle">Edit Application</a>
         }
         <a href="@Url.Action("DeleteApplication", new { id = application.JobSeekerID })" class="genric-btn danger circle">Delete Application</a>

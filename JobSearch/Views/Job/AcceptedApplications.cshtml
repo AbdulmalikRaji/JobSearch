@@ -1,0 +1,85 @@
+﻿@model List<DatabaseLayer.JobSeekerTable>
+
+@{
+    ViewBag.Title = "All Accepted Applications";
+}
+
+<h2>All Accepted Applications</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            Job Title
+        </th>
+        <th>
+            Company Name
+        </th>
+        <th>
+            Company Contact No
+        </th>
+        <th>
+            Applicant Name
+        </th>
+        <th>
+            Applicant Phone
+        </th>
+        <th>
+            Application Date
+        </th>
+        <th>
+            Job Category
+        </th>
+        <th>
+            Nature
+        </th>
+        <th>
+            Status
+        </th>
+        <th>
+            Action
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PostJobTable.JobTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PostJobTable.CompanyTable.CompanyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PostJobTable.CompanyTable.ContactNo)
+            </td>
+            <td>
+                @(item.FirstName + " " + item.LastName) 
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactNo)
+            </td>
+            <td>
+                @{
+                    var formattedDate = item.ApplicationDate.ToString("dd/MM/yyyy");
+                }
+
+                @formattedDate
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PostJobTable.JobCategoryTable.JobCategory)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PostJobTable.JobNatureTable.JobNature)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobApplyStatus)
+            </td>
+
+            <td>
+                @Html.ActionLink("View Job", "JobDetails", new { id = item.PostJobID }, new { @class = "genric-btn btn-sm primary" })
+            </td>
+        </tr>
+    }
+
+</table>
