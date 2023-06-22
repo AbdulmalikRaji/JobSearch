@@ -6,6 +6,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BCrypt.Net;
+using System.Net;
+using System.Net.Mail;
+using System.Security.Cryptography;
+using System.Text;
 
 
 
@@ -166,22 +170,61 @@ namespace JobSearch.Controllers
         {
             return View(new ForgotPasswordMv());
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Forgot(ForgotPasswordMv forgotPasswordMv)
         {
-            var user = db.UserTables.Where(u => u.EmailAddress == forgotPasswordMv.Email).FirstOrDefault();
-            if (user != null) 
+            var user = db.UserTables.FirstOrDefault(u => u.EmailAddress == forgotPasswordMv.Email);
+            if (user != null)
             {
-                ModelState.AddModelError(string.Empty, "Password Has been reset successfully");
+                string newPassword = GenerateRandomPassword();
+
+                string hashedPassword = BCrypt.Net.BCrypt.HashPassword(newPassword);
+
+                // Update the user's password in the database
+                user.Password = hashedPassword;
+                db.SaveChanges();
+
+                SendPasswordResetEmail(user.EmailAddress, newPassword);
+
+                ModelState.AddModelError(string.Empty, "Password has been reset successfully. Please check your email for the new password.");
             }
             else
             {
-                ModelState.AddModelError("Email", "Email Address is Incorrect");
+                ModelState.AddModelError("Email", "Email address is incorrect.");
             }
-            
+
             return View();
         }
+
+        private string GenerateRandomPassword()
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var random = new Random();
+            string password = new string(Enumerable.Repeat(chars, 8)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
+
+            return password;
+        }
+        private void SendPasswordResetEmail(string emailAddress, string newPassword)
+        {
+
+            SmtpClient smtpClient = new SmtpClient("smtp.office365.com", 587);
+            smtpClient.UseDefaultCredentials = false;
+            smtpClient.Credentials = new NetworkCredential("rajimalik183@outlook.com", "Avenuemalik2002");
+            smtpClient.EnableSsl = true;
+
+            MailMessage mailMessage = new MailMessage();
+            mailMessage.From = new MailAddress("rajimalik183@outlook.com");
+            mailMessage.To.Add(emailAddress);
+            mailMessage.Subject = "Password Reset";
+            mailMessage.Body = $"Your new password is: {newPassword}";
+
+            smtpClient.Send(mailMessage);
+        }
+
+
         public ActionResult AppliedJobs()
         {
             if (string.IsNullOrEmpty(Convert.ToString(Session["UserID"])))
@@ -249,7 +292,6 @@ namespace JobSearch.Controllers
             application.Skills = updatedApplication.Skills;
             application.ExperienceID = updatedApplication.ExperienceID;
             application.Education = updatedApplication.Education;
-            // Update other fields as needed
 
 
             db.SaveChanges();

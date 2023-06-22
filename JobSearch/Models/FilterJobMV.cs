@@ -12,8 +12,8 @@ namespace JobSearch.Models
         {
             Result = new List<PostJobTable>();
         }
-        public int JobCategoryID { get; set; }
-        public int JobNatureID { get; set; }
+        public int? JobCategoryID { get; set; }
+        public int? JobNatureID { get; set; }
         public int NoDays { get; set; }
         public List<PostJobTable> Result { get; set; }
     }

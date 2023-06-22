@@ -292,20 +292,35 @@ namespace JobSearch.Controllers
         public ActionResult FilterJob(FilterJobMV filterJobMV)
         {
             var date = DateTime.Now.Date;
-            var result = db.PostJobTables.Where(r => r.ApplicationLastDate >= date && r.JobStatusID == 2 && r.Vacancy>0 && (r.JobCategoryID == filterJobMV.JobCategoryID || r.JobNatureID == filterJobMV.JobNatureID)).ToList();
+            var query = db.PostJobTables.Where(r => r.ApplicationLastDate >= date && r.JobStatusID == 2 && r.Vacancy > 0);
+
+            if (filterJobMV.JobCategoryID.HasValue)
+            {
+                query = query.Where(r => r.JobCategoryID == filterJobMV.JobCategoryID.Value);
+            }
+
+            if (filterJobMV.JobNatureID.HasValue)
+            {
+                query = query.Where(r => r.JobNatureID == filterJobMV.JobNatureID.Value);
+            }
+
+            var result = query.ToList();
             filterJobMV.Result = result;
 
             ViewBag.JobCategoryID = new SelectList(
-               db.JobCategoryTables.ToList(),
-               "JobCategoryID",
-               "JobCategory",
-               filterJobMV.JobCategoryID);
+                db.JobCategoryTables.ToList(),
+                "JobCategoryID",
+                "JobCategory",
+                filterJobMV.JobCategoryID);
+
             ViewBag.JobNatureID = new SelectList(
                 db.JobNatureTables.ToList(),
                 "JobNatureID",
                 "JobNature",
                 filterJobMV.JobNatureID);
+
             return View(filterJobMV);
+
         }
         [HttpGet]
         public ActionResult Apply(int jobId)
