@@ -16,9 +16,12 @@
                 <div class="country">EmailAddress</div>
                 <div class="country">Contact No</div>
                 <div class="country">UserType</div>
+                <div class="country">Action</div>
             </div>
             @foreach (var item in Model)
             {
+                if (item.UserTypeID != 1)
+                {
 
                 <div class="table-row">
                     <div class="serial">@Html.DisplayFor(modelItem => item.UserID)</div>
@@ -26,7 +29,9 @@
                     <div class="country">@Html.DisplayFor(modelItem => item.EmailAddress)</div>
                     <div class="country">@Html.DisplayFor(modelItem => item.ContactNo)</div>
                     <div class="country">@Html.DisplayFor(modelItem => item.UserTypeTable.UserType)</div>
+                    <div class="country">@Html.ActionLink("Delete", "DeleteUser", new { id = item.UserID }, new { @class = "genric-btn danger circle text-sm" })</div>
                 </div>
+                }
             }
 
         </div>

@@ -166,6 +166,21 @@ namespace JobSearch.Controllers
             return View(users);
 
         }
+        public ActionResult DeleteUser(int id)
+        {
+            // Find the user in the database
+            var user = db.UserTables.Find(id);
+
+            if (user == null)
+            {
+                return RedirectToAction("AllUsers", "User");
+            }
+
+            db.UserTables.Remove(user);
+            db.SaveChanges();
+
+            return RedirectToAction("AllUsers", "User");
+        }
         public ActionResult Forgot()
         {
             return View(new ForgotPasswordMv());
