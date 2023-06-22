@@ -42,6 +42,9 @@
         <th>
             Status
         </th>
+        <th>
+            Action
+        </th>
     </tr>
 
 @foreach (var item in Model) {
@@ -58,11 +61,12 @@
         <td>
             @Html.DisplayFor(modelItem => item.Vacancy)
         </td>
-        @{
-            var formattedPostDate = item.PostDate.ToString("dd/MM/yyyy");
-        }
-
-        @formattedPostDate
+        <td>
+            @{
+                var formattedPostDate = item.PostDate.ToString("dd/MM/yyyy");
+            }
+            @formattedPostDate
+        </td>
         <td>
             @{
                 var formattedDate = item.ApplicationLastDate.ToString("dd/MM/yyyy");

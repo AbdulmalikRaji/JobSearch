@@ -110,7 +110,7 @@ namespace JobSearch.Controllers
             var allposts = db.PostJobTables.ToList();
             if (allposts.Count() > 1)
             {
-                allposts = allposts.OrderByDescending(c => c.PostJobID).ToList();
+                allposts = allposts.Where(c => c.Vacancy > 0).OrderByDescending(c => c.PostJobID).ToList();
             }
 
             return View(allposts);
@@ -273,7 +273,7 @@ namespace JobSearch.Controllers
         {
             var obj = new FilterJobMV();
             var date = DateTime.Now.Date;
-            var result = db.PostJobTables.Where(r => r.ApplicationLastDate >= date && r.JobStatusID == 2).ToList();
+            var result = db.PostJobTables.Where(r => r.ApplicationLastDate >= date && r.JobStatusID == 2 && r.Vacancy > 0).ToList();
             obj.Result = result;
             ViewBag.JobCategoryID = new SelectList(
                db.JobCategoryTables.ToList(),
@@ -409,12 +409,16 @@ namespace JobSearch.Controllers
                 return HttpNotFound();
             }
 
-            jobSeeker.JobApplyStatus = status;
-            db.SaveChanges();
             var job = db.PostJobTables.Find(jobSeeker.PostJobID);
-            if (job != null && job.Vacancy > 0)
+            if (job != null && job.Vacancy > 0 && status == "ACCEPTED")
             {
+                jobSeeker.JobApplyStatus = status;
                 job.Vacancy--;
+                db.SaveChanges();
+            }
+            else if (status == "REJECTED")
+            {
+                jobSeeker.JobApplyStatus = status;
                 db.SaveChanges();
             }
 
@@ -430,11 +434,12 @@ namespace JobSearch.Controllers
             {
                 return HttpNotFound();
             }
+            var old_status = jobSeeker.JobApplyStatus;
 
             jobSeeker.JobApplyStatus = "PENDING";
             db.SaveChanges();
             var job = db.PostJobTables.Find(jobSeeker.PostJobID);
-            if (job != null)
+            if (job != null && old_status == "ACCEPTED")
             {
                 job.Vacancy++;
                 db.SaveChanges();

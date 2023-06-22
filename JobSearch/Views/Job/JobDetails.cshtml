@@ -7,8 +7,9 @@
     if (!string.IsNullOrEmpty(Convert.ToString(Session["UserTypeID"])))
     {
         int.TryParse(Convert.ToString(Session["UserTypeID"]), out usertypeid);
-    }
         int userId = Convert.ToInt32(Session["UserID"]);
+    }
+
 
 }
 
@@ -73,6 +74,7 @@
                                     <li>@Html.DisplayFor(modelItem => detail.JobRequirementDetails)</li>
                                 }
                             </ul>
+                            <a href="@Url.Action("FilterJob", "Job")" class="genric-btn danger">Back</a>
                         </div>
                     }
 
