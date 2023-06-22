@@ -175,7 +175,13 @@ namespace JobSearch.Controllers
             {
                 return RedirectToAction("AllUsers", "User");
             }
+            var companies = db.CompanyTables.Where(c => c.UserID == id).ToList();
+            var appliations = db.JobSeekerTables.Where(c => c.UserID == id).ToList();
+            var jobs = db.PostJobTables.Where(c => c.UserID == id).ToList();
 
+            db.PostJobTables.RemoveRange(jobs);
+            db.CompanyTables.RemoveRange(companies);
+            db.JobSeekerTables.RemoveRange(appliations);
             db.UserTables.Remove(user);
             db.SaveChanges();
 

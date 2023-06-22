@@ -373,8 +373,10 @@
           <NavigationProperty Name="UserTables" Relationship="Self.FK_UserTypeTable_UserTable" FromRole="UserTypeTable" ToRole="UserTable" />
         </EntityType>
         <Association Name="FK_CompanyTable_UserTable">
-          <End Role="UserTable" Type="Self.UserTable" Multiplicity="1" />
-          <End Role="CompanyTable" Type="Self.CompanyTable" Multiplicity="*" />
+          <End Role="UserTable" Type="Self.UserTable" Multiplicity="1" >
+          </End>
+          <End Role="CompanyTable" Type="Self.CompanyTable" Multiplicity="*" >
+          </End>
           <ReferentialConstraint>
             <Principal Role="UserTable">
               <PropertyRef Name="UserID" />
@@ -472,7 +474,8 @@
           <NavigationProperty Name="JobRequirementDetailTables" Relationship="jobsearchDBModel.FK_JobRequirementDetailTable_JobRequirementsTable" FromRole="JobRequirementsTable" ToRole="JobRequirementDetailTable" />
         </EntityType>
         <Association Name="FK_JobRequirementDetailTable_JobRequirementsTable">
-          <End Type="jobsearchDBModel.JobRequirementsTable" Role="JobRequirementsTable" Multiplicity="1" />
+          <End Type="jobsearchDBModel.JobRequirementsTable" Role="JobRequirementsTable" Multiplicity="1" >
+          </End>
           <End Type="jobsearchDBModel.JobRequirementDetailTable" Role="JobRequirementDetailTable" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="JobRequirementsTable">
@@ -572,8 +575,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PostJobTable_UserTable">
-          <End Type="jobsearchDBModel.UserTable" Role="UserTable" Multiplicity="1" />
-          <End Type="jobsearchDBModel.PostJobTable" Role="PostJobTable" Multiplicity="*" />
+          <End Type="jobsearchDBModel.UserTable" Role="UserTable" Multiplicity="1" >
+          </End>
+          <End Type="jobsearchDBModel.PostJobTable" Role="PostJobTable" Multiplicity="*" >
+          </End>
           <ReferentialConstraint>
             <Principal Role="UserTable">
               <PropertyRef Name="UserID" />
@@ -604,7 +609,8 @@
           <Property Name="JobApplyStatus" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_JobSeekerTable_PostJobTable">
-          <End Type="jobsearchDBModel.PostJobTable" Role="PostJobTable" Multiplicity="1" />
+          <End Type="jobsearchDBModel.PostJobTable" Role="PostJobTable" Multiplicity="1" >
+          </End>
           <End Type="jobsearchDBModel.JobSeekerTable" Role="JobSeekerTable" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PostJobTable">
@@ -616,8 +622,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_JobSeekerTable_UserTable">
-          <End Type="jobsearchDBModel.UserTable" Role="UserTable" Multiplicity="1" />
-          <End Type="jobsearchDBModel.JobSeekerTable" Role="JobSeekerTable" Multiplicity="*" />
+          <End Type="jobsearchDBModel.UserTable" Role="UserTable" Multiplicity="1" >
+          </End>
+          <End Type="jobsearchDBModel.JobSeekerTable" Role="JobSeekerTable" Multiplicity="*" >
+          </End>
           <ReferentialConstraint>
             <Principal Role="UserTable">
               <PropertyRef Name="UserID" />
